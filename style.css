@@ -28,7 +28,12 @@ letter-spacing: 5px;
 
 }
 h2{
-    font-family: Franklin Gothic;
+    font-family: 'Franklin Gothic', serif; 
+    /** 
+     * For font names with spaces, prefer surrounding the names with '' some browsers won't like that.
+     * I've also added serif to tell the broser that if it does not have 'Franklin Gothic' to use a serif font, you should
+     * always add font alternatives to avoid having unexpected behavior on other browsers
+     **/
     color: rgb(25, 77, 59);
     letter-spacing: 3px;
     padding-bottom: 1.5rem;
@@ -51,6 +56,11 @@ a{
 .header{
     background: rgb(26, 26, 97);
     align-content: center;
+    /**
+     * The paddings here might look normal on a desktop but they are too big and push all your content,
+     * You've also fixed the height of the header, this makes it pretty much unable to grow bigger in height when the content
+     * is being "pushed"
+     **/
     padding-left: 170px;
     padding-top: 170px;
     height: 600px;
@@ -117,3 +127,96 @@ a{
     padding-top: 20px;
 }
 
+/**
+ * This will be applied for tablet screens and smaller, anything bigger than 768px will not read these css rules
+ **/
+@media screen and (max-width: 768px) {
+    /**
+     * flex-wrap: wrap tells the flex container to "break" the line and put items that can't fit in the flex down
+     * See this: https://css-tricks.com/almanac/properties/f/flex-wrap/
+     *
+     * place-content: center; helps us tell the browser we want to center our items inside our flex
+     **/
+    .heading {
+        flex-wrap: wrap;
+        place-content: center;
+    }
+    /**
+     * we add a margin to the logo so it's more spaced from the "August 24..." text
+     **/
+    .heading .logo {
+        margin-bottom: 1.5rem;
+    }
+    /**
+     * rather than adding paddings from left and top, we add a uniform padding from all sides
+     * next we change the container to display as flex, set it to column and justify everything to center
+     * this will make things look more centered on tablet
+     **/
+    .header {
+        padding: 50px;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+    /**
+     * remove the margin right to center the container
+     **/
+    .hero-container {
+        margin-right: 0;
+    }
+    /**
+     * Set our navbar as a centered flex so it looks aligned
+     **/
+    .nav-bar ul {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+    }
+}
+
+/**
+ * This will be applied for tablet screens and smaller, anything bigger than 425px will not read these css rules
+ * Keep in mind that the rules for tablet are being applied for mobile too because it's 425px is < than 768px
+ **/
+ @media screen and (max-width: 425px) {
+    /**
+     * first things first, your footer is overflowing on the right thus breaking the layout,
+     * here's a gif to show you the problem: https://imgur.com/a/VDqApIL
+     *
+     * Let's fix the footer layout:
+     * We set our footer as column-reverse to have the copyright down and the menu up
+     * We add aa padding to keep it more uniform
+     **/
+     .footer {
+        display: flex;
+        flex-flow: column-reverse;
+        align-items: center;
+        padding: 1.5rem;
+    }
+    /** We set our footer menu as a vertical list **/
+    .footer ul {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    /** We remove paddings to better center the copyright **/
+    .footer .home {
+        padding: 0;
+    }
+    /** Now let's fix the header, let's first remove the height so it takes all the space it needs **/
+    .header {
+        height: auto;
+    }
+    /** next we set our header menu as a list, just like .footer ul previously **/
+    .nav-bar ul {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    /** We do the same thing with our features items so they line up vertically to display better **/
+    .features ul {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+}
